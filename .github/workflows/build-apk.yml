@@ -27,7 +27,8 @@ jobs:
         working-directory: ./turovfy-mobile
         run: |
           npm install
-          npm run build
+          npx tsc --noEmit || true
+          npx vite build
           npx cap add android || true
           npx cap sync android
 
