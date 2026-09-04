@@ -6,6 +6,7 @@ import { Navigation } from './components/Navigation';
 import { MiniPlayer } from './components/MiniPlayer';
 import { FullPlayer } from './components/FullPlayer';
 import { LyricsModal } from './components/LyricsModal';
+import { AuthScreen } from './screens/AuthScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { SearchScreen } from './screens/SearchScreen';
 import { LibraryScreen } from './screens/LibraryScreen';
@@ -13,6 +14,7 @@ import { ArtistScreen } from './screens/ArtistScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 
 export const App: React.FC = () => {
+  const [isAuth, setIsAuth] = useState(false);
   const [currentTab, setCurrentTab] = useState<TabType>('drops');
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [queue, setQueue] = useState<Track[]>([]);
@@ -57,15 +59,11 @@ export const App: React.FC = () => {
   }, [queue]);
 
   const handleNext = useCallback(() => {
-    if (queueIndex + 1 < queue.length) {
-      playIndex(queueIndex + 1);
-    }
+    if (queueIndex + 1 < queue.length) playIndex(queueIndex + 1);
   }, [queueIndex, queue, playIndex]);
 
   const handlePrev = useCallback(() => {
-    if (queueIndex - 1 >= 0) {
-      playIndex(queueIndex - 1);
-    }
+    if (queueIndex - 1 >= 0) playIndex(queueIndex - 1);
   }, [queueIndex, playIndex]);
 
   const togglePlay = useCallback(() => {
@@ -117,8 +115,12 @@ export const App: React.FC = () => {
     ? (playlists['Любимое'] || []).some((t) => t.id === currentTrack.id)
     : false;
 
+  if (!isAuth) {
+    return <AuthScreen onLoginSuccess={() => setIsAuth(true)} />;
+  }
+
   return (
-    <div className="min-h-screen bg-[#050507] text-white select-none">
+    <div className="min-h-screen bg-black text-white select-none relative overflow-x-hidden">
       <audio
         ref={audioRef}
         onTimeUpdate={onTimeUpdate}
