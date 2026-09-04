@@ -29,7 +29,8 @@ jobs:
           npm install
           npx tsc --noEmit || true
           npx vite build
-          npx cap add android || true
+          npx cap init TurovFy com.turov.fy --web-dir dist --yes || true
+          npx cap add android
           npx cap sync android
 
       - name: Build Debug APK
