@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --bg-color: #050507;
+  --bg-color: #000000;
+  --surface-color: #121216;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --border-color: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -13,6 +16,18 @@ body {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   overflow-x: hidden;
+}
+
+/* Красивые градиентные линии на фоне а-ля Яндекс Музыка/Dotify */
+.wave-bg-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 350px;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .no-scrollbar::-webkit-scrollbar {
